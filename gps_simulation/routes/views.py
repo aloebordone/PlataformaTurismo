@@ -102,3 +102,22 @@ def city_detail(request, id):
         'rutas_salida': rutas_salida,
         'rutas_llegada': rutas_llegada
     })
+
+
+"""Ejemplo Simplificado para crear un grafo de ruta mas corta usando el algoritmo djistra(views.py):
+
+Python
+import networkx as nx
+from .models import Ciudad, Conexion
+
+def encontrar_ruta(request, origen, destino):
+    # Construir el grafo
+    G = nx.Graph()
+    for conexion in Conexion.objects.all():
+        G.add_edge(conexion.origen.id, conexion.destino.id, weight=conexion.distancia)
+
+    try:
+        ruta = nx.dijkstra_path(G, origen, destino, weight='weight')
+        return render(request, 'ruta.html', {'ruta': ruta})
+    except nx.NetworkXNoPath:
+        return render(request, 'ruta.html', {'error': 'No se encontró ruta'})"""

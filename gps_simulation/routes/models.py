@@ -1,18 +1,13 @@
 from django.db import models
 
 class City(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True, blank = False)
     description = models.TextField(null=True)
-    image = models.ImageField(
-        upload_to="../gps_simulation/media/city_images", null=True, blank=True
-    )
-
-    def __str__(self):
-        return self.name
+    population = models.IntegerField(null=True, unique=False)
 
     
     def __str__(self):
-        return self.name
+        return  f"{self.name} - ({self.description}) - ({self.population} habitantes)"
 
 
 class Route(models.Model):
