@@ -7,7 +7,7 @@ class City(models.Model):
 
     
     def __str__(self):
-        return  f"{self.name} - ({self.description}) - ({self.population} habitantes)"
+        return  f"{self.name} -> ({self.description}) - ({self.population} habitantes)"
 
 
 class Route(models.Model):
