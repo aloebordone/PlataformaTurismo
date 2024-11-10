@@ -1,39 +1,39 @@
 import heapq
 from .models import City, Route
 
-def dijkstra(start_city):
-    distances = {start_city:0}
-    previous_cities = {start_city:None}
+def dijkstra(start_city): #algoritmo de dijkstra para calcular las distancias más cortas para ir de una ciudad a otra
+    distances = {start_city:0} #abre un diccionario para las distancias, que inicia en 0
+    previous_cities = {start_city:None} #diccionario para rastrear la ciudad anterior
     # completar
-    return distances, previous_cities
+    return distances, previous_cities #devuelve los dos diccionarios de distancias y ciudades anteriores
 
-def get_shortest_path(start_city, end_city):
-    distances, previous_cities = dijkstra(start_city)
-    path = []
-    city = end_city
+def get_shortest_path(start_city, end_city): #define una función para obtener el camino más corto dado una ciudad de inicio y una de llegada
+    distances, previous_cities = dijkstra(start_city) #se calculan distancias mínimas y ciudades previas con el algoritmo de dijkstra desde la ciudad de inicio
+    path = [] #se arma una lista con las ciudades que conforman la ruta
+    city = end_city #ciudad de llegada
 
-    while previous_cities[city]:
+    while previous_cities[city]: #recorre el diccionario de ciudades previas para construir el recorrido
         path.insert(0, city)
         city = previous_cities[city]
     path.insert(0, city)
 
-    return path, distances[end_city]
+    return path, distances[end_city] #retorna el camino y la distancia final
 
-class ArbolBinarioBusqueda:
+class ArbolBinarioBusqueda: #se crea una clase para crear un Árbol Binario de Búsqueda
 
-    def __init__(self):
-        self.raiz = None
-        self.tamano = 0
+    def __init__(self): #inicia un ábol vacío
+        self.raiz = None #define la raíz como none inicialmente
+        self.tamano = 0 #inicia un contador para saber el tamaño
 
-    def agregar(self,clave,valor):
-        if self.raiz:
-            self._agregar(clave,valor,self.raiz)
-        else:
-            self.raiz = NodoArbol(clave,valor)
-        self.tamano = self.tamano + 1
+    def agregar(self,clave,valor): #método para agregar un nodo
+        if self.raiz: #se fija si ya existe una raíz en el árbol, y si la hay...
+            self._agregar(clave,valor,self.raiz) #llama a la función _agregar
+        else: #si no había raíz
+            self.raiz = NodoArbol(clave,valor) #crea una raíz con el nodo dado utilizando la clase NodoArbol
+        self.tamano = self.tamano + 1 #al agregar un nodo, aumenta 1 al contador de tamaño
 
-    def _agregar(self,clave,valor,nodoActual):
-        if clave < nodoActual.clave:
+    def _agregar(self,clave,valor,nodoActual): #es una función recursiva para agregar un nodo en el lugar correcto
+        if clave < nodoActual.clave:#si la clave del nodo dado es menor a la del nodo actual...
             if nodoActual.tieneHijoIzquierdo():
                 self._agregar(clave,valor,nodoActual.hijoIzquierdo)
             else:
