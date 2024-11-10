@@ -1,4 +1,8 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.db.models import UniqueConstraint
+
 
 class City(models.Model):
     name = models.CharField(max_length=100, unique=True, blank = False)
@@ -21,3 +25,18 @@ class Route(models.Model):
 
     def __str__(self):
         return f"{self.start_city} -> {self.end_city} ({self.distance} km)"
+    
+    class Meta:
+        constraints = [
+            UniqueConstraint(fields=['start_city', 'end_city'], name='unique_route')
+        ]
+
+@receiver(post_save, sender=Route)
+def create_inverse_route(sender, instance, created, **kwargs):
+    if created:
+        # Intentar crear la ruta inversa. Si ya existe, se omite.
+        Route.objects.get_or_create(
+            start_city=instance.end_city,
+            end_city=instance.start_city,
+            defaults={'distance': instance.distance}
+        )
