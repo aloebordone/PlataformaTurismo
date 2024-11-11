@@ -1,27 +1,34 @@
-import heapq
-from .models import City, Route
+import heapq # Importa heapq para gestionar la cola de prioridad, cada nodo siempre será menor o igual que sus hijos y será la base de la raíz del arbol
+from .models import City, Route #importa la clase ciudad y ruta del archivo model
 
-def dijkstra(start_city): #algoritmo de dijkstra para calcular las distancias más cortas para ir de una ciudad a otra
-    distances = {start_city:0} #abre un diccionario para las distancias, que inicia en 0
-    previous_cities = {start_city:None} #diccionario para rastrear la ciudad anterior
-       # Crear una cola de prioridad (min-heap) para seleccionar el nodo con menor distancia
-    priority_queue = [(0, start_city)]  # (distancia, nodo)
+def dijkstra(start_city): #se le pasa una ciudad por parametro desde donde se quiere empezar
+    distances = {start_city: 0} #diccionario que guarda nombre de las ciudades(clave) y las distancias mas cortas(valor) encontradas la ciudad parámetro.
+    previous_cities = {start_city: None} #permite construir el camino mas corto guardando el nodo anterior(ciudad) distancia mas corta por el que paso.
+    priority_queue = [(0, start_city)] # crea cola de prioridad para recorrer los nodos del grafo en orden de la distancia mas corta
+ 
+ 
+    while priority_queue: # mientras haya elementos en la cola para recorrer en el grafo
+         
+        current_distance, current_city = heapq.heappop(priority_queue) #elimina el elemento con la menor distancia y la ciudad y asigna los valores en las dos variables current
 
-    while priority_queue:
-        current_distance, current_city = heapq.heappop(priority_queue)
-
-        # Si la distancia actual es mayor que la distancia almacenada, se ha encontrado un camino más corto
-        if current_distance > distances[current_city]:
+        #compara si la distancia actual extraida de la cola es mayor a la obtenida del diccionario
+        if current_distance > distances.get(current_city, float('inf')): #en el diccionario distances busca la distancia asociada a la ciudad current_city
             continue
 
-        # Iterar sobre los vecinos de la ciudad actual
-        for neighbor in current_city.neighbors:
-            distance_to_neighbor = current_distance + neighbor.distance
-            if distance_to_neighbor < distances.get(neighbor, float('inf')):
-                distances[neighbor] = distance_to_neighbor
-                previous_cities[neighbor] = current_city
-                heapq.heappush(priority_queue, (distance_to_neighbor, neighbor))
-    return distances, previous_cities #devuelve los dos diccionarios de distancias y ciudades anteriores
+        
+        for route in list(current_city.route_start.all()) + list(current_city.route_end.all()):#Recorre las rutas que salen desde la ciudad actual y las que llegan a la ciudad actual (para un grafo no dirigido)
+           
+            neighbor = route.end_city if route.start_city == current_city else route.start_city  #Verifica si la ciudad de inicio es la ciudad actual, entonces el vecino será la ciudad destino. Sino la ciudad vecino será la actual
+            distance = current_distance + route.distance #suma las distancias
+
+       
+            if distance < distances.get(neighbor, float('inf')): #verifica si la nueva distancia es menor a la ya registrada para ese vecino
+                distances[neighbor] = distance #si es menor, la asigna como la nueva distancia 
+                previous_cities[neighbor] = current_city #actualiza la ciudad del vecino a la actual
+                heapq.heappush(priority_queue, (distance, neighbor)) #agrega la distancia y el vecino a la cola de prioridad
+
+    return distances, previous_cities
+
 
 def get_shortest_path(start_city, end_city): #define una función para obtener el camino más corto dado una ciudad de inicio y una de llegada
     distances, previous_cities = dijkstra(start_city) #se calculan distancias mínimas y ciudades previas con el algoritmo de dijkstra desde la ciudad de inicio
