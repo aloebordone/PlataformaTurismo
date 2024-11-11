@@ -4,7 +4,23 @@ from .models import City, Route
 def dijkstra(start_city): #algoritmo de dijkstra para calcular las distancias más cortas para ir de una ciudad a otra
     distances = {start_city:0} #abre un diccionario para las distancias, que inicia en 0
     previous_cities = {start_city:None} #diccionario para rastrear la ciudad anterior
-    # completar
+       # Crear una cola de prioridad (min-heap) para seleccionar el nodo con menor distancia
+    priority_queue = [(0, start_city)]  # (distancia, nodo)
+
+    while priority_queue:
+        current_distance, current_city = heapq.heappop(priority_queue)
+
+        # Si la distancia actual es mayor que la distancia almacenada, se ha encontrado un camino más corto
+        if current_distance > distances[current_city]:
+            continue
+
+        # Iterar sobre los vecinos de la ciudad actual
+        for neighbor in current_city.neighbors:
+            distance_to_neighbor = current_distance + neighbor.distance
+            if distance_to_neighbor < distances.get(neighbor, float('inf')):
+                distances[neighbor] = distance_to_neighbor
+                previous_cities[neighbor] = current_city
+                heapq.heappush(priority_queue, (distance_to_neighbor, neighbor))
     return distances, previous_cities #devuelve los dos diccionarios de distancias y ciudades anteriores
 
 def get_shortest_path(start_city, end_city): #define una función para obtener el camino más corto dado una ciudad de inicio y una de llegada
