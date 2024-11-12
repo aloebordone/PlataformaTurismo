@@ -1,8 +1,9 @@
 from django.contrib import admin
-
-# Register your models here.
-
 from .models import City, Route
 
-admin.site.register(City)
+@admin.register(City)
+class CityAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description', 'population']
+
 admin.site.register(Route)
+

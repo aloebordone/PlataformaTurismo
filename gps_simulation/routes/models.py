@@ -9,10 +9,10 @@ class City(models.Model): #crea modelo City en la base de datos
     name = models.CharField(max_length=100, unique=True, blank = False) #define como será el campo nombre: cantidad de palabras, no puede repetirse la ciudad y no puede estar en blacno su nombre
     description = models.TextField(null=True) #define el formato del campo descripcion
     population = models.IntegerField(null=True, unique=False) #define formato de campo population
-
+    image = models.ImageField(upload_to='city_images/', null=True, blank=True)  #campo imagen
     
     def __str__(self): #crea metodo str para mostrar de manera legible al usuario nombre, descripcion y habitantes
-        return  f"{self.name} - ({self.description}) - ({self.population} habitantes)"
+        return  f"{self.name}"
 
 
 class Route(models.Model): #crea modelo Route en la bse de datos
