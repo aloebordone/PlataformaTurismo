@@ -27,7 +27,15 @@ Creen un archivo Readme.md en el repo Con
 
     utils.py: en este archivo se desarrollo el código del algoritmo dijkstra que toma como punto de partida una ciudad, y guarda en un diccionario las distancias hacia todas las ciudades qut tiene como vecinas. Gracias al módulo priority_queue crea una cola de prioridad donde acomoda las distancias encontradas de menor a mayor. Extrae el último elemento de la cola y asigan sus elementos a dos variables que luego usa para ir guardando el recorrido entre ciudades y la distancia total
 
+    tests.py: en este archivo se implementaron pruebas de uso para verificar que todo esté funcionando correctamente. Para ello nos encontramos con dificultades como la configuración de Django y su entorno, ya que no podríamos ejecutar el archivo en consola. Tuvimos que importar os y establecer la configuración del entorno dentro del mismo archivo (ayuda de chat gpt) y los test dieron todos OK.
+
     - el analisis de complejidad algortmica de dijkstra: 
+    En la inicialización, crea el diccionario, distances y previous_cities: O(1). Insertar el nodo en la cola de prioridad: O(log v). Bucle principal: extraer el nodo con la menor distancia de la cola de prioridad O(log v), para cada nodo recorrer sus vecinos (E veces en total): O(E). Actualizar la distancia y volver a insertar en la cola de prioridad: O(log v)
+        Notación Big-O
+        O ((V + E)*log V)
+        referencias:
+        (V) es el número de vertices (ciudades)
+        (E) es el número de aristas (rutas)
 
 
     En funcionamento: carga de rutas y ciudades, carga de descripción y población, calculo de distancia mas corta y devoluión del recorrido que realziar por las ciudades para llegar a destino.
