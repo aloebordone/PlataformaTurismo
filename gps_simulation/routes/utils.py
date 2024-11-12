@@ -4,12 +4,13 @@ from .models import City, Route #importa la clase ciudad y ruta del archivo mode
 def dijkstra(start_city): #se le pasa una ciudad por parametro desde donde se quiere empezar
     distances = {start_city: 0} #diccionario que guarda nombre de las ciudades(clave) y las distancias mas cortas(valor) encontradas la ciudad parámetro.
     previous_cities = {start_city: None} #permite construir el camino mas corto guardando el nodo anterior(ciudad) distancia mas corta por el que paso.
-    priority_queue = [(0, start_city)] # crea cola de prioridad para recorrer los nodos del grafo en orden de la distancia mas corta
+    priority_queue = [(0, start_city.name)] # crea cola de prioridad para recorrer los nodos del grafo en orden de la distancia mas corta
  
  
     while priority_queue: # mientras haya elementos en la cola para recorrer en el grafo
          
-        current_distance, current_city = heapq.heappop(priority_queue) #elimina el elemento con la menor distancia y la ciudad y asigna los valores en las dos variables current
+        current_distance, current_city_name = heapq.heappop(priority_queue) #elimina el elemento con la menor distancia y la ciudad y asigna los valores en las dos variables current
+        current_city = City.objects.get(name=current_city_name)  # Obtenemos el objeto City
 
         #compara si la distancia actual extraida de la cola es mayor a la obtenida del diccionario
         if current_distance > distances.get(current_city, float('inf')): #en el diccionario distances busca la distancia asociada a la ciudad current_city
@@ -25,7 +26,7 @@ def dijkstra(start_city): #se le pasa una ciudad por parametro desde donde se qu
             if distance < distances.get(neighbor, float('inf')): #verifica si la nueva distancia es menor a la ya registrada para ese vecino
                 distances[neighbor] = distance #si es menor, la asigna como la nueva distancia 
                 previous_cities[neighbor] = current_city #actualiza la ciudad del vecino a la actual
-                heapq.heappush(priority_queue, (distance, neighbor)) #agrega la distancia y el vecino a la cola de prioridad
+                heapq.heappush(priority_queue, (distance, neighbor.name)) #agrega la distancia y el vecino a la cola de prioridad
 
     return distances, previous_cities
 
