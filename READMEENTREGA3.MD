@@ -29,6 +29,12 @@ Creen un archivo Readme.md en el repo Con
 
     tests.py: en este archivo se implementaron pruebas de uso para verificar que todo esté funcionando correctamente. Para ello nos encontramos con dificultades como la configuración de Django y su entorno, ya que no podríamos ejecutar el archivo en consola. Tuvimos que importar os y establecer la configuración del entorno dentro del mismo archivo (ayuda de chat gpt) y los test dieron todos OK.
 
+    city_detail.html: se modificaron algunas líneas para que se lea mejor la descripción y habilitar las imágenes.
+
+    urls.py: se modificaron y agregaron líneas de código para habilitar la carga de imágenes
+
+    tests.py: se crearon pruebas para comprobar el buen funcionamiento. 
+
     - el analisis de complejidad algortmica de dijkstra: 
     En la inicialización, crea el diccionario, distances y previous_cities: O(1). Insertar el nodo en la cola de prioridad: O(log v). Bucle principal: extraer el nodo con la menor distancia de la cola de prioridad O(log v), para cada nodo recorrer sus vecinos (E veces en total): O(E). Actualizar la distancia y volver a insertar en la cola de prioridad: O(log v)
         Notación Big-O
@@ -38,11 +44,10 @@ Creen un archivo Readme.md en el repo Con
         (E) es el número de aristas (rutas)
 
 
-    En funcionamento: carga de rutas y ciudades, carga de descripción y población, calculo de distancia mas corta y devoluión del recorrido que realziar por las ciudades para llegar a destino.
+    En funcionamento: carga de rutas y ciudades, carga de descripción y población, calculo de distancia mas corta y devoluión del recorrido que realziar por las ciudades para llegar a destino. Imágenes ilustrativas de cada ciudad, visualizacióon de datos importantes como descripción y población. 
 
-    Que no funciona: Se notó que al realizar la consulta del recorrido entre algunas ciudades en particular, el proyecto no se ejecutaba bien.
 
-    Mejoras: Se puede agregar una imagen ilustrativa de las ciudades y se podría darle algún tipo de estilo mas divertido a la vista del usuario.
+    Mejoras: Se puede hacer más vistoso para el usuario, con otros colores y tipografías. 
 
 
     
